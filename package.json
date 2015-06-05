@@ -1,0 +1,28 @@
+{
+  "name": "sse-pusher",
+  "version": "0.1.0",
+  "description": "Simple server-sent events (SSE) for Connect and Express",
+  "main": "index.js",
+  "repository": "pgaubatz/node-sse-pusher",
+  "keywords": [
+    "server-sent",
+    "events",
+    "sse",
+    "connect",
+    "express",
+    "middleware"
+  ],
+  "author": "Patrick Gaubatz <patrick@gaubatz.at>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pgaubatz/node-sse-pusher/issues"
+  },
+  "homepage": "https://github.com/pgaubatz/node-sse-pusher#readme",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "scripts": {
+    "test": "mocha -R spec test/",
+    "cover": "istanbul cover ./node_modules/mocha/bin/_mocha --report html -- -R spec"
+  }
+}
