@@ -24,5 +24,10 @@
   "scripts": {
     "test": "mocha -R spec test/",
     "cover": "istanbul cover ./node_modules/mocha/bin/_mocha --report html -- -R spec"
+  },
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "mocha": "^2.2.4",
+    "nock": "^2.2.0"
   }
 }
