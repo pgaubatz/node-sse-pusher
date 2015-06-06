@@ -27,7 +27,8 @@
   },
   "devDependencies": {
     "chai": "^2.3.0",
-    "mocha": "^2.2.4",
-    "nock": "^2.2.0"
+    "eventsource": "^0.1.6",
+    "express": "^4.12.4",
+    "mocha": "^2.2.4"
   }
 }

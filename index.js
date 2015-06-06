@@ -9,6 +9,10 @@ module.exports = function () {
     if (typeof data === 'undefined') {
       data = eventOrData;
       eventOrData = null;
+
+    } else if (typeof data === 'object') {
+      data = JSON.stringify(data);
+
     } else if (typeof eventOrData !== 'string') {
       throw new TypeError('\'event\' must be a string');
     }
@@ -20,36 +24,32 @@ module.exports = function () {
       if (eventOrData) {
         client.write('event: ' + eventOrData + '\n');
       }
-      client.write('data: ' + JSON.stringify(data) + '\n\n');
+      client.write('data: ' + data + '\n\n');
     });
   }
 
-  fn.handler = function () {
-    return function (req, res) {
-      var clientId = nextClientId++;
+  fn.handler = function (path) {
+    return function (req, res, next) {
+      if (req.headers.accept !== 'text/event-stream' || path && path !== req.url) {
+        return next();
+      }
 
+      var clientId = nextClientId++;
       clients[clientId] = res;
+
+      req.socket.setTimeout(0); // '0' means 'no timeout'
 
       req.on('close', function () {
         delete clients[clientId];
       });
 
-      req.socket.setTimeout(0); // '0' means 'no timeout'
+      res.writeHead(200, {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive'
+      });
 
-      res.statusCode = 200;
-
-      res.setHeader('Content-Type', 'text/event-stream');
-      res.setHeader('Cache-Control', 'no-cache');
-      res.setHeader('Connection', 'keep-alive');
-    };
-  };
-
-  fn.middleware = function (path) {
-    return function (req, res, next) {
-      if (req.headers['Accept'] !== 'text/event-stream' || path && path !== req.url) {
-        return next();
-      }
-      return fn.handler()(req, res);
+      res.write('\n', 'utf-8'); // 'flush' output buffer
     };
   };
 
