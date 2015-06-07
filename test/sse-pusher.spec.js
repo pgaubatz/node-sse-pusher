@@ -2,6 +2,7 @@
 
 require('chai').should();
 
+var http = require('http');
 var express = require('express');
 var EventSource = require('eventsource');
 
@@ -101,5 +102,15 @@ describe('SSE-Pusher', function () {
     push.bind(push, {test: 123}, 'some event').should.throw(TypeError);
 
     push.bind(push, 'greeting', 'some event').should.not.throw(TypeError);
+  });
+
+  it('should ignore all requests that do not have a \'Accept: text/event-stream\' header', function (done) {
+    app.use(push.handler('/'));
+
+    http.get('http://localhost:3000/', function (res) {
+      res.statusCode.should.equal(404);
+      res.destroy();
+      done();
+    });
   });
 });
