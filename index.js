@@ -9,12 +9,12 @@ module.exports = function () {
     if (typeof data === 'undefined') {
       data = eventOrData;
       eventOrData = null;
-
-    } else if (typeof data === 'object') {
-      data = JSON.stringify(data);
-
     } else if (typeof eventOrData !== 'string') {
       throw new TypeError('\'event\' must be a string');
+    }
+
+    if (typeof data !== 'string' && typeof data !== 'number' && typeof data !== 'boolean') {
+      data = JSON.stringify(data);
     }
 
     Object.keys(clients).forEach(function (clientId) {
