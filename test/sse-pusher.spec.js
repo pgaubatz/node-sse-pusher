@@ -94,4 +94,12 @@ describe('SSE-Pusher', function () {
       }
     };
   });
+
+  it('should should throw an exception if the \'event\' parameter is no string', function () {
+    push.bind(push, 1, 'some event').should.throw(TypeError);
+    push.bind(push, true, 'some event').should.throw(TypeError);
+    push.bind(push, {test: 123}, 'some event').should.throw(TypeError);
+
+    push.bind(push, 'greeting', 'some event').should.not.throw(TypeError);
+  });
 });
