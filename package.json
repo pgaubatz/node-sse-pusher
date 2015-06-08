@@ -1,6 +1,6 @@
 {
   "name": "sse-pusher",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "Simple server-sent events (SSE) for Connect and Express",
   "main": "index.js",
   "repository": "pgaubatz/node-sse-pusher",
