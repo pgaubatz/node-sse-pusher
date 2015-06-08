@@ -9,7 +9,7 @@ Simple server-sent events (SSE) for Connect and Express.
 ## Installation
 
 ```
-$ npm install --save commander
+$ npm install --save sse-pusher
 ```
     
 ## Usage
