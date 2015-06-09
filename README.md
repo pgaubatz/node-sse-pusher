@@ -11,7 +11,29 @@ Simple server-sent events (SSE) for Connect and Express.
 ```
 $ npm install --save sse-pusher
 ```
-    
+
+## API
+
+```javascript
+var ssePusher = require('sse-pusher'); 
+var push = ssePusher();
+```
+
+### push([event,] data)
+
+Pushes an optionally typed (i.e., using the `event` parameter) event to all connected SSE clients. 
+
+Parameters:
+- `event` - event **type**, must be a string;
+- `data` - event **data**, can be anything that can be serialized using `JSON.stringify()`. More precisely, anything that is *not* a string, number or boolean will be serialized using `JSON.stringify()`.
+
+### push.handler([mountPath])
+
+Returns a function that can be used both as a Connect/Express middleware and an Express route handler.
+
+Parameters:
+- `mountPath` - path where the Connect/Express middleware shall be mounted (e.g., `/some/path`).
+
 ## Usage
 
 ### Server-side
@@ -48,10 +70,6 @@ push('eventname', 'eventdata');
 push({some: 'data'});
 ```
 
-In general, `push(event, data)` accepts the following two parameters:
-- `event` - event **type**, must be a string;
-- `data` - event **data**, can be anything that can be serialized using `JSON.stringify()`. More precisely, anything that is *not* a string, number or boolean will be serialized using `JSON.stringify()`.
-
 ### Client-side
 
 On the client (i.e., the Web browser) you may then listen to the server-side emitted messages using the following code:
@@ -69,4 +87,3 @@ es.addEventListener('greeting', function (event) {
   console.log(event.data); // logs 'world'
 });
 ```
-
