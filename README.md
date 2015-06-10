@@ -58,7 +58,7 @@ app.use(push.handler('/some/path')); // variant 1
 app.use('/some/path', push.handler()); // variant 2
 
 // install the pusher as an Express route handler:
-app.get('/some/path', push.handler();
+app.get('/some/path', push.handler());
 ```
 
 Finally, using `push(event, data)` or `push(data)` you can then start pushing data to connected SSE clients:
