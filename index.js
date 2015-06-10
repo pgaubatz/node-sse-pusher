@@ -1,6 +1,9 @@
 'use strict';
 
-module.exports = function () {
+module.exports = create;
+module.exports.create = create;
+
+function create() {
   var eventId = 0;
   var nextClientId = 0;
   var clients = {};
@@ -54,4 +57,4 @@ module.exports = function () {
   };
 
   return fn;
-};
+}

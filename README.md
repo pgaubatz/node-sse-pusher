@@ -16,7 +16,9 @@ $ npm install --save sse-pusher
 
 ```javascript
 var ssePusher = require('sse-pusher'); 
-var push = ssePusher();
+
+var push = ssePusher(); // instantiation variant 1
+var push = ssePusher.create(); // instantiation variant 2
 ```
 
 ### push([event,] data)
@@ -45,7 +47,7 @@ First, you have to load the package a instantiate a new SSE-Pusher:
 var ssePusher = require('sse-pusher'); 
 
 // instantiate a new SSE-Pusher:
-var push = ssePusher(); 
+var push = ssePusher();
 ```
 
 Afterwards, you have to "wire" the SSE-Pusher with you HTTP framework of choice (i.e., Connect or Express):

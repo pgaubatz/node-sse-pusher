@@ -23,6 +23,13 @@ describe('SSE-Pusher', function () {
     server.close(done);
   });
 
+  it('can be instantiated using .create()', function () {
+    var fn = ssePusher.create();
+    fn.should.be.a('function');
+    fn.should.have.property('handler');
+    fn.handler.should.be.a('function');
+  });
+
   it('should allow events to be pushed', function (done) {
     app.use(push.handler('/some/path'));
 
