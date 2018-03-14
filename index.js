@@ -55,6 +55,4 @@ function create() {
       res.write('\n', 'utf-8'); // 'flush' output buffer
     };
   };
-
-  return fn;
 }
