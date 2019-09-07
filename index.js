@@ -27,7 +27,16 @@ function create() {
       if (eventOrData) {
         client.write('event: ' + eventOrData + '\n');
       }
-      client.write('data: ' + data + '\n\n');
+      
+      if (data.constructor && data.constructor === String) {
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim
+        data.replace(/(?:\r?\n)+$/g, '').split(/\r?\n/).forEach(function(line) {
+          client.write ('data: ' + line + '\n');
+        });
+        client.write('\n');
+      } else {
+        client.write('data: ' + data + '\n\n');
+      }
     });
   }
 
