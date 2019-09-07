@@ -103,6 +103,32 @@ describe('SSE-Pusher', function () {
     };
   });
 
+  it('should correctly send multiline strings', function (done) {
+    app.use(push.handler('/'));
+
+    var values = [
+      "a\nb\r\nc\n",
+      "a\nb\r\n\r\nc\nd\n\n\n",
+      JSON.stringify({some: 'data'}, null, "\t"),
+    ];
+    var es = new EventSource('http://localhost:3000/');
+    es.onopen = function () {
+      values.forEach(function (value) {
+        push(value);
+      });
+    };
+    es.onmessage = function (event) {
+      var value = event.data;
+      var sentValue = values.splice(0, 1)[0].split(/\r?\n/).join('\n').replace(/(?:\r?\n)+$/, '');
+      sentValue.should.deep.equal(value);
+
+      if (values.length < 1) {
+        es.close();
+        done();
+      }
+    };
+  });
+
   it('should should throw an exception if the \'event\' parameter is no string', function () {
     push.bind(push, 1, 'some event').should.throw(TypeError);
     push.bind(push, true, 'some event').should.throw(TypeError);
